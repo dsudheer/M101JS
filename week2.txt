@@ -1,0 +1,41 @@
+Homework: Multiple selectors in a find() command
+C:\sudheer\node_js\week2\creating_documents.bd458134ca53\creating_documents>mongorestore dump
+use video
+db.movieDetails.find({ "year" : 2013, "rated" : "PG-13", "awards.wins" : 0 }).count();
+
+db.movieDetails.find({ "year" : 2013, "rated" : "PG-13", "awards.wins" : 0 }).pretty();
+db.movieDetails.find({ "year" : 2013, "rated" : "PG-13", "awards.wins" : 0 }, { "title" : 1 }).pretty();
+
+ANS:A Decade of Decadence, Pt. 2: Legacy of Dreams
+======================================================
+Homework: Arrays with nested documents
+{"awards.oscars.award": "bestPicture"}
+======================================================
+Homework: Simple projection
+db.movieDetails.find({ "year" : 2013, "rated" : "PG-13", "awards.wins" : 0 }, { "_id" : 0, "title" : 1 }).pretty();
+ANS:{"_id": 0, "title": 1}
+============================
+Homework: Matching a specific array element
+db.movieDetails.find({"countries.1": "Sweden"}, {"_id": 0, "title": 1}).limit(1);
+ANS:The Girl with the Dragon Tattoo
+==================================
+Homework: Equality queries on arrays
+db.movieDetails.find({genres: ["Comedy", "Crime"]}).count();
+ANS:20
+============================
+Homework: Array operators
+db.movieDetails.find({genres: {$all: ["Comedy", "Crime"]}}).count();
+ANS:56
+=======================================
+Homework: Updating scalar fields
+ANS:$set
+============================================
+quiz
+// Count matched rows
+db.movieDetails.find({"imdb.votes": {$lt: 10000}, year: {$gte: 2010, $lte: 2013}, $and: [{"tomato.consensus": {$exists: true}}, {"tomato.consensus": null}]}).count();
+// Answer: 13
+
+// Updating docs
+db.movieDetails.updateMany({"imdb.votes": {$lt: 10000}, year: {$gte: 2010, $lte: 2013}, $and: [{"tomato.consensus": {$exists: true}}, {"tomato.consensus": null}]}, {$unset: {"tomato.consensus": ""}});
+// Answer: { "acknowledged" : true, "matchedCount" : 13, "modifiedCount" : 13 }
+==============================================================================
