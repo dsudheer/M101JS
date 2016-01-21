@@ -1,0 +1,44 @@
+WEEK 2: CRUD
+Creating Documents 
+
+The _id Field 
+
+Reading Documents 
+
+Multiple selectors in a find() command 
+Homework due Jan 19 17:00 UTC 2016
+
+Arrays with nested documents 
+Homework due Jan 19 17:00 UTC 2016
+
+Simple projection 
+Homework due Jan 19 17:00 UTC 2016
+
+Matching a specific array element 
+Homework due Jan 19 17:00 UTC 2016
+
+Comparison Operators 
+
+Element Operators 
+
+Logical Operators 
+
+Regex Operator 
+
+Array Operators 
+
+Equality queries on arrays 
+Homework due Jan 19 17:00 UTC 2016
+
+Array operators 
+Homework due Jan 19 17:00 UTC 2016
+
+Challenge Exercise: Arrays with nested documents 
+
+Updating Documents 
+
+Updating scalar fields 
+Homework due Jan 19 17:00 UTC 2016
+
+Updating based on multiple criteria 
+Quiz
