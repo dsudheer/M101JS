@@ -1,0 +1,33 @@
+WEEK 3: THE NODE.JS DRIVER
+find() and Cursors in the Node.js Driver 
+
+Projection in the Node.js Driver 
+
+The CrunchBase Dataset 
+
+Query Operators in the Node.js Driver 
+
+$regex in the Node.js Driver
+
+Dot Notation in the Node.js Driver 
+
+Dot Notation on Embedded Documents in Arrays 
+
+Sort, Skip, and Limit in the Node.js Driver 
+Quiz
+
+insertOne() and insertMany() in the Node.js Driver 
+
+deleteOne() and deleteMany() in the Node.js Driver 
+
+Homework: 3.1 
+Homework due Jan 26 17:00 UTC 2016
+
+Homework: 3.2 
+Homework due Jan 26 17:00 UTC 2016
+
+Homework: 3.3 
+Homework due Jan 26 17:00 UTC 2016
+
+Homework: 3.4 
+Homework due Jan 26 17:00 UTC 2016
