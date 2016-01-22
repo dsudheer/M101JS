@@ -1,0 +1,10 @@
+diff -r C:\sudheer\AVS\GIT\M101JS\week3\homework_3_3\buildingQueryDocuments\buildingQueryDocuments\buildingQueryDocuments.js C:\sudheer\AVS\GIT\M101JS\week3\homework_3_3\buildingQueryDocuments\buildingQueryDocuments\buildingQueryDocuments-sd.js
+114c114
+<         "tag_list": /* TODO: Complete this statement to match the regular expression "social-networking" */        
+---
+>         "tag_list": {"$regex": "social\-networking", "$options": "i"} /* TODO: Complete this statement to match the regular expression "social-networking" */        
+122a123,124
+> 		
+> 		query.founded_year = { "$gte": options.firstYear, "$lte": options.lastYear};
+135a138
+> 		query["offices.city"] = options.city;
