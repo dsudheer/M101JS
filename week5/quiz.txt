@@ -1,0 +1,256 @@
+Quiz: Storage Engines: Introduction
+
+The storage engine directly determines which of the following? Check all that apply.
+The data file format
+Format of indexes
+=================================================
+Quiz: Storage Engines: MMAPv1
+
+Which of the following statements about the MMAPv1 storage engine are true? Check all that apply.
+MMAPv1 automatically allocates power-of-two-sized documents when new documents are inserted
+MMAPv1 is built on top of the mmap system call that maps files into memory
+========================================================
+Quiz: Storage Engines: WiredTiger
+
+Which of the following are features of the WiredTiger storage engine?
+
+Document-level concurrency
+Compression 
+=======================================
+Quiz: Indexes
+
+Which optimization will typically have the greatest impact on the performance of a database.
+
+Adding appropriate indexes on large collections so that only a small percentage of queries need to scan the collection.
+===================
+Quiz: Creating Indexes
+
+Please provide the mongo shell command to add an index to a collection named students, having the index key be class, student_name.
+
+Neither will go in the "-1" direction..
+db.students.createIndex({'class': 1, 'student_name': 1})
+=========================================
+Quiz: Discovering (and Deleting) Indexes
+
+Which of the following is a valid way to discover indexes for a collection in mongoDB?
+
+db.collection.getIndexes()
+====================================
+Quiz: Multikey Indexes
+
+Suppose we have a collection foo that has an index created as follows:
+db.foo.createIndex( { a:1, b:1 } )
+Which of the following inserts are valid to this collection?
+db.foo.insert( { a : ["apples", "oranges" ], b : "grapes" } ) 
+db.foo.insert( { a : "grapes", b : "oranges" } ) 
+db.foo.insert( { a : "grapes", b : [ 8, 9, 10 ] } ) 
+=================================================
+Quiz: Dot Notation and Multikey
+Suppose you have a collection called people in the database earth with documents of the following form:
+{
+	"_id" : ObjectId("551458821b87e1799edbebc4"),
+	"name" : "Eliot Horowitz",
+	"work_history" : [
+		{
+			"company" : "DoubleClick",
+			"position" : "Software Engineer"
+		},
+		{
+			"company" : "ShopWiki",
+			"position" : "Founder & CTO"
+		},
+		{
+			"company" : "MongoDB",
+			"position" : "Founder & CTO"
+		}
+	]
+}
+Type the command that you would issue in the Mongo shell to create an index on company, descending.
+
+db.people.createIndex({"work_history.company":-1});
+========================================================
+
+Quiz: Index Creation Option, Unique
+
+Please provide the mongo shell command to create a unique index on student_id, class_id, ascending for the collection students
+
+db.students.createIndex({"student_id": 1, "class_id": 1}, {unique: true});
+=========================================================
+Quiz: Index Creation, Sparse
+
+What are the advantages of a sparse index? Check all that apply.
+
+The index will be smaller than it would if it were not sparse.
+You can gain greater flexibility with creating Unique indexes.
+=====================================================
+Quiz: Index Creation, Background
+
+Which things are true about creating an index in the background in MongoDB. Check all that apply.
+
+Although the database server will continue to take requests, a background index creation still blocks the mongo shell that you are using to create the index.
+Creating an index in the background takes longer than creating it in the foreground
+=========================================================
+Quiz: Using Explain
+
+Which of the following are valid ways to find out which index uses a particular query? Check all that apply.
+var exp = db.example.explain(); exp.find( { a : 1, b : 2 } ) 
+db.example.find( { a : 1, b : 2 } ).explain() 
+db.example.explain().remove( { a : 1, b : 2 } ) 
+curs = db.example.find( { a : 1, b : 2 } ); curs.explain() 
+db.example.explain().find( { a : 1, b : 2 } ) 
+======================================================
+Quiz: Explain: Verbosity
+
+Given the following output from explain, what is the best description of what happened during the query?
+> exp = db.example.explain("executionStats")
+Explainable(test.example)
+> exp.find( { a : 7 } )
+{
+	"queryPlanner" : {
+		"plannerVersion" : 1,
+		"namespace" : "test.example",
+		"indexFilterSet" : false,
+		"parsedQuery" : {
+			"a" : {
+				"$eq" : 7
+			}
+		},
+		"winningPlan" : {
+			"stage" : "COLLSCAN",
+			"filter" : {
+				"a" : {
+					"$eq" : 7
+				}
+			},
+			"direction" : "forward"
+		},
+		"rejectedPlans" : [ ]
+	},
+	"executionStats" : {
+		"executionSuccess" : true,
+		"nReturned" : 10000,
+		"executionTimeMillis" : 619,
+		"totalKeysExamined" : 0,
+		"totalDocsExamined" : 999999,
+		"executionStages" : {
+			"stage" : "COLLSCAN",
+			"filter" : {
+				"a" : {
+					"$eq" : 7
+				}
+			},
+			"nReturned" : 10000,
+			"executionTimeMillisEstimate" : 520,
+			"works" : 1000001,
+			"advanced" : 10000,
+			"needTime" : 990000,
+			"needFetch" : 0,
+			"saveState" : 7812,
+			"restoreState" : 7812,
+			"isEOF" : 1,
+			"invalidates" : 0,
+			"direction" : "forward",
+			"docsExamined" : 999999
+		}
+	},
+	"serverInfo" : {
+		"host" : "cross-mb-air.local",
+		"port" : 27017,
+		"version" : "3.0.1",
+		"gitVersion" : "534b5a3f9d10f00cd27737fbcd951032248b5952"
+	},
+	"ok" : 1
+}
+
+The query scanned 999,999 documents, returning 10,000 in 619 milliseconds. 
+======================================================
+Quiz: Covered Queries
+
+You would like to perform a covered query on the example collection. You have the following indexes:
+
+{ name : 1, dob : 1 }
+{ _id : 1 }
+{ hair : 1, name : 1 }
+Which of the following is likely to be a covered query? Check all that apply.
+
+db.example.find( { name : { $in : [ "Bart", "Homer" ] } }, {_id : 0, dob : 1, name : 1} )
+===========================================================
+Quiz: When is an Index Used?
+
+Given collection foo with the following index:
+
+db.foo.createIndex( { a : 1, b : 1, c : 1 } )
+Which of the following queries will use the index?
+
+db.foo.find( { a : 3 } ) 
+db.foo.find( { c : 1 } ).sort( { a : 1, b : 1 } ) 
+====================================
+Quiz: How Large is Your Index?
+
+Is it more important that your index or your data fit into memory?
+Index
+==================================================
+Quiz: Number of Index Entries
+
+Let's say you update a document with a key called tags and that update causes the document to need to get moved on disk. Assume you are using the MMAPv1 storage engine. If the document has 100 tags in it, and if the tags array is indexed with a multikey index, how many index points need to be updated in the index to accommodate the move? Put just the number below.
+
+100
+===============================================================
+Quiz: Geospatial Indexes
+
+Suppose you have a 2D geospatial index defined on the key location in the collection places. Write a query that will find the closest three places (the closest three documents) to the location 74, 140.
+db.places.find( { location : { $near : [74,140] } }).limit(3)
+============================================================
+Quiz: Geospatial Spherical
+
+What is the query that will query a collection named "stores" to return the stores that are within 1,000,000 meters of the location latitude=39, longitude=-130? Type the query in the box below. Assume the stores collection has a 2dsphere index on "loc" and please use the "$near" operator. Each store record looks like this:
+
+{ "_id" : { "$oid" : "535471aaf28b4d8ee1e1c86f" }, "store_id" : 8, "loc" : { "type" : "Point", "coordinates" : [ -37.47891236119904, 4.488667018711567 ] } }
+
+db.stores.find({ loc:{ $near:	{ $geometry: { type: "Point", coordinates: [-130, 39]}, $maxDistance:1000000 } } })
+====================================================
+Quiz: Text Indexes
+
+You create a text index on the "title" field of the movies collection, and then perform the following text search:
+
+> db.movies.find( { $text : { $search : "Big Lebowski" } } )
+Which of the following documents will be returned, assuming they are in the movies collection? Check all that apply.
+
+{ "title" : "The Big Lebowski" , star: "Jeff Bridges" } 
+{ "title" : "Big" , star : "Tom Hanks" } 
+{ "title" : "Big Fish" , star: "Ewan McGregor" } 
+==================================================
+Quiz: Efficiency of Index Use
+
+In general, based on the preceding lecture, what is the primary factor that determines how efficiently an index can be used?
+
+The number of fields in a compound index
+Whether we are able to sort using the index
+The selectivity of the index
+
+The selectivity of the index 
+======================================================
+Quiz: Efficiency of Index Use Example
+
+In general, which of the following rules of thumb should you keep in mind when building compound indexes? Check all that apply. For this question, use the following definitions: 
+equality field: field on which queries will perform an equality test
+sort field: field on which queries will specify a sort
+range field: field on which queries perform a range test
+
+Equality fields before range fields
+Sort fields before range fields
+Equality fields before sort fields
+======================================================
+Quiz: Profiling
+
+Write the query to look in the system profile collection for all queries that took longer than one second, ordered by timestamp descending.
+
+db.system.profile.find({millis:{$gt:1000}}).sort({ts:-1})
+================================================
+Which of the following statements about mongostat output are true? Check all that apply.
+
+The getmore column concerns the number of requests per time interval to get additional data from a cursor
+
+the faults column appears only in the mmapv1 output 
+==============================================
+
