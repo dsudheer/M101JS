@@ -1,0 +1,15 @@
+5.1
+db.products.find( { 'brand' : "GE" } ).sort( { price : 1 } )
+db.products.find( { $and : [ { price : { $gt : 30 } },{ price : { $lt : 50 } } ] } ).sort( { brand : 1 } )
+==================================
+5.2
+The query uses an index to determine the order in which to return result documents.
+The query examines 251120 documents.
+=================================================================
+5.3
+C:\Users\d.sudheerkumar\Downloads>mongoimport -d m101 -c profile < sysprofile.acfbb9617420.json
+
+use m101
+
+db.profile.find({ "ns" : /school2.students/ }, { "millis" : 1 }).limit(1).sort({ "millis" : -1 });
+ans:15820
